@@ -18,7 +18,7 @@ namespace StockBot.Messages
             {
                 using(var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(queueName);
+                    channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false);
                     var stringfiedMessage = JsonConvert.SerializeObject(message);
                     var bytesMessage = Encoding.UTF8.GetBytes(stringfiedMessage);
                     channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: bytesMessage);

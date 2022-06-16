@@ -27,7 +27,7 @@ namespace StockBot.Services
         }
         private async Task ExecuteStockQuoteCommand(string stockCode)
         {
-            var stockQuote = await _stockService.GetStockQuoteByCode(stockCode);
+            var stockQuote = (await _stockService.GetStockQuoteByCode(stockCode)).ToString("F", System.Globalization.CultureInfo.InvariantCulture);
             var message = $"{stockCode} quote is ${stockQuote} per share";
             _messagePublisher.PublishMessageOnQueue("stock-queue", message);
         }

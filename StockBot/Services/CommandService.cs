@@ -8,11 +8,12 @@ namespace StockBot.Services
     {
         private readonly IStockService _stockService;
         private readonly IMessagePublisher _messagePublisher;
-
-        public CommandService(IStockService stockService, IMessagePublisher messagePublisher)
+        private readonly ILogger<CommandService> _logger;
+        public CommandService(IStockService stockService, IMessagePublisher messagePublisher, ILogger<CommandService> logger)
         {
             _stockService = stockService;
             _messagePublisher = messagePublisher;
+            _logger = logger;
         }
         public async Task ExecuteCommand(CommandModel command)
         {
@@ -27,9 +28,19 @@ namespace StockBot.Services
         }
         private async Task ExecuteStockQuoteCommand(string stockCode)
         {
-            var stockQuote = (await _stockService.GetStockQuoteByCode(stockCode)).ToString("F", System.Globalization.CultureInfo.InvariantCulture);
-            var message = $"{stockCode} quote is ${stockQuote} per share";
-            _messagePublisher.PublishMessageOnQueue("stock-queue", message);
+            try
+            {
+                var stockQuote = (await _stockService.GetStockQuoteByCode(stockCode)).ToString("F", System.Globalization.CultureInfo.InvariantCulture);
+                var message = $"{stockCode.ToUpper()} quote is ${stockQuote} per share";
+                _messagePublisher.PublishMessageOnQueue("stock-queue", message);
+                _logger.LogInformation("Stock quote success message sent");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                var message = $"Sorry, I couldn't get {stockCode.ToUpper()} quote. Try another stock code.";
+                _messagePublisher.PublishMessageOnQueue("stock-queue", message);
+            }
         }
     }
 }

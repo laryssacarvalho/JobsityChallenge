@@ -17,6 +17,8 @@ builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>();
 builder.Services.AddScoped<IMessagePublisher, MessagePublisher>();
 
+builder.Services.AddHttpClient<IStockService, StockService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

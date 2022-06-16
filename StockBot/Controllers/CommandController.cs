@@ -22,12 +22,17 @@ public class CommandController : ControllerBase
     {
         try
         {
+            if (string.IsNullOrEmpty(command.Command))
+                return BadRequest("The field 'command' is mandatory");
+
             if (!command.IsValid())
                 return BadRequest("Invalid command");
 
             await _commandService.ExecuteCommand(command);
 
-            return Ok();
+            _logger.LogInformation("Command executed!");
+
+            return Accepted();
 
         } catch(Exception e)
         {

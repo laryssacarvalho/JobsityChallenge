@@ -12,7 +12,6 @@ namespace StockBot.Services
         public StockService(HttpClient client)
         {
             _client = client;
-
         }
 
         public async Task<float> GetStockQuoteByCode(string stockCode)

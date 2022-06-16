@@ -17,7 +17,7 @@ namespace StockBot.Services
         }
         public async Task ExecuteCommand(CommandModel command)
         {
-            switch (command.Command) 
+            switch (command.Command)
             {
                 case ("/stock"):
                     await ExecuteStockQuoteCommand(command.Value);

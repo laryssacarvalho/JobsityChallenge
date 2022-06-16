@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using StockBot.Models;
-using StockBot.Services;
 using StockBot.Services.Interfaces;
 
 namespace StockBot.Controllers;
@@ -23,7 +22,7 @@ public class CommandController : ControllerBase
         try
         {
             if (string.IsNullOrEmpty(command.Command))
-                return BadRequest("The field 'command' is mandatory");
+                return BadRequest("The field 'command' is required");
 
             if (!command.IsValid())
                 return BadRequest("Invalid command");
@@ -34,7 +33,8 @@ public class CommandController : ControllerBase
 
             return Accepted();
 
-        } catch(Exception e)
+        }
+        catch (Exception e)
         {
             _logger.LogError(e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError, "An error occured");

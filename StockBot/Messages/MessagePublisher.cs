@@ -14,9 +14,9 @@ namespace StockBot.Messages
 
         public void PublishMessageOnQueue(string queueName, object message)
         {
-            using(var connection = _connectionFactory.CreateConnection())
+            using (var connection = _connectionFactory.CreateConnection())
             {
-                using(var channel = connection.CreateModel())
+                using (var channel = connection.CreateModel())
                 {
                     channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false);
                     var stringfiedMessage = JsonConvert.SerializeObject(message);

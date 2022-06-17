@@ -2,23 +2,23 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
 
-document.getElementById("sendButton").disabled = true;
+$("#sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
-    var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    li.textContent = `${user}: ${message}`;
+    var li = $("<li></li>").text(user + ": " + message);
+    li.addClass("list-group-item");
+    $("#messagesList").append(li);
 });
 
 connection.start().then(function () {
-    document.getElementById("sendButton").disabled = false;
+    $("#sendButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = document.getElementById("userInput").value;
-    var message = document.getElementById("messageInput").value;
+$("#sendButton").on("click", function (event) {
+    var user = $("#userName").val();
+    var message = $("#messageInput").val();
     connection.invoke("SendMessage", user, message).catch(function (err) {
         return console.error(err.toString());
     });

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockBot", "StockBot\StockBot.csproj", "{BD7BDEC1-2D7E-485D-8FDE-479817D1A2AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChallenge.UnitTests", "JobsityChallenge.UnitTests\JobsityChallenge.UnitTests.csproj", "{F4237E05-70C7-426B-8EB0-F42440482C1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChallenge.UnitTests", "JobsityChallenge.UnitTests\JobsityChallenge.UnitTests.csproj", "{F4237E05-70C7-426B-8EB0-F42440482C1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChallenge.Chat", "JobsityChallenge.Chat\JobsityChallenge.Chat.csproj", "{51849C2E-D19A-49B3-8C42-1C1FAEAF1A6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChallenge.Chat", "JobsityChallenge.Chat\JobsityChallenge.Chat.csproj", "{51849C2E-D19A-49B3-8C42-1C1FAEAF1A6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

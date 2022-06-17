@@ -1,16 +1,15 @@
-﻿@page
-@model IndexModel
+﻿@using JobsityChallenge.Chat.Models
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Page";
 }
+@{   
+    var userName = ViewBag.UserFullName;  
+}  
 
-
-    <div class="container">
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-2">User</div>
-            <div class="col-4"><input type="text" id="userInput" /></div>
-        </div>
+<div class="container">
+    <input type="hidden" id="userName" value="@userName" />
+        <div class="row">&nbsp;</div>        
         <div class="row">
             <div class="col-2">Message</div>
             <div class="col-4"><input type="text" id="messageInput" /></div>
@@ -32,5 +31,7 @@
             <ul id="messagesList"></ul>
         </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>

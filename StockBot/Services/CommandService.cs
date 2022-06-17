@@ -25,6 +25,7 @@ namespace StockBot.Services
                 default:
                     throw new NotImplementedException("This command does not exist.");
             }
+            //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
         }
         private async Task ExecuteStockQuoteCommand(string stockCode)
         {

@@ -8,9 +8,9 @@ namespace JobsityChallenge.Chat.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<UserModel> _userManager;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<User> userManager)
+    public HomeController(ILogger<HomeController> logger, UserManager<UserModel> userManager)
     {
         _logger = logger;
         _userManager = userManager;

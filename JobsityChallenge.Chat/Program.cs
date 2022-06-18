@@ -1,6 +1,7 @@
 using JobsityChallenge.Chat.Data;
+using JobsityChallenge.Chat.Entities;
 using JobsityChallenge.Chat.Hubs;
-using JobsityChallenge.Chat.Models;
+using JobsityChallenge.Chat.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
@@ -29,6 +30,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     // User settings.
     options.User.RequireUniqueEmail = true;
 });
+
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<DbContext, ApplicationDbContext>();
+
 
 var app = builder.Build();
 

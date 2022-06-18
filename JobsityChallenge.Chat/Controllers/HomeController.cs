@@ -1,4 +1,5 @@
-﻿using JobsityChallenge.Chat.Models;
+﻿using JobsityChallenge.Chat.Entities;
+using JobsityChallenge.Chat.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,9 +9,9 @@ namespace JobsityChallenge.Chat.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly UserManager<UserModel> _userManager;
+    private readonly UserManager<UserEntity> _userManager;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<UserModel> userManager)
+    public HomeController(ILogger<HomeController> logger, UserManager<UserEntity> userManager)
     {
         _logger = logger;
         _userManager = userManager;
@@ -21,6 +22,7 @@ public class HomeController : Controller
         var currentUser = await _userManager.GetUserAsync(User);
         
         ViewBag.UserFullName = $"{currentUser.FirstName} {currentUser.LastName}";
+        ViewBag.UserId = currentUser.Id;
 
         return View();
     }

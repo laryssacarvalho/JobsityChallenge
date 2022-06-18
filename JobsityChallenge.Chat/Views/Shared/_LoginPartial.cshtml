@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<UserModel> SignInManager
-@inject UserManager<UserModel> UserManager
+@using JobsityChallenge.Chat.Entities
+@inject SignInManager<UserEntity> SignInManager
+@inject UserManager<UserEntity> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

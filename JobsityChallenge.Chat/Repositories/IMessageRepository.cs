@@ -1,11 +1,11 @@
-﻿using JobsityChallenge.Chat.Models;
+﻿using JobsityChallenge.Chat.Entities;
 
 namespace JobsityChallenge.Chat.Repositories
 {
     public interface IMessageRepository
     {
-        public Task<IEnumerable<MessageModel>> GetMessages();
-        public Task InsertMessage(MessageModel message);
+        public Task<IEnumerable<MessageEntity>> GetMessages();
+        public Task InsertMessage(MessageEntity message);
         public Task Save();
     }
 }

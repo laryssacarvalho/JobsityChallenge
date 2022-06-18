@@ -1,13 +1,13 @@
-﻿using JobsityChallenge.Chat.Models;
+﻿using JobsityChallenge.Chat.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobsityChallenge.Chat.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<UserModel>
+    public class ApplicationDbContext : IdentityDbContext<UserEntity>
     {
-        public DbSet<MessageModel> Messages { get; set; }
-        public DbSet<UserModel> Users { get; set; }
+        public DbSet<MessageEntity> Messages { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -17,23 +17,23 @@ namespace JobsityChallenge.Chat.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserModel>()
+            modelBuilder.Entity<UserEntity>()
                 .Property(e => e.FirstName)
                 .HasMaxLength(250);
 
-            modelBuilder.Entity<UserModel>()
+            modelBuilder.Entity<UserEntity>()
                 .Property(e => e.LastName)
                 .HasMaxLength(250);
 
-            modelBuilder.Entity<MessageModel>()
+            modelBuilder.Entity<MessageEntity>()
                 .HasKey(e => e.Id);
 
-            modelBuilder.Entity<MessageModel>()
+            modelBuilder.Entity<MessageEntity>()
                 .HasOne(e => e.User)
                 .WithMany(m => m.Messages)
                 .HasForeignKey(e => e.UserId);
 
-            modelBuilder.Entity<MessageModel>()
+            modelBuilder.Entity<MessageEntity>()
                 .Property(e => e.Date)
                 .HasDefaultValueSql("getdate()");
         }

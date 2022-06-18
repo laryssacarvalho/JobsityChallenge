@@ -17,9 +17,10 @@ connection.start().then(function () {
 });
 
 $("#sendButton").on("click", function (event) {
-    var user = $("#userName").val();
+    var userName = $("#userName").val();
+    var userId = $("#userId").val();
     var message = $("#messageInput").val();
-    connection.invoke("SendMessage", user, message).catch(function (err) {
+    connection.invoke("SendMessage", userId, userName, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

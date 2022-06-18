@@ -1,4 +1,5 @@
-﻿using JobsityChallenge.Chat.Models;
+﻿using JobsityChallenge.Chat.Entities;
+using JobsityChallenge.Chat.Models;
 using JobsityChallenge.Chat.Repositories;
 using Microsoft.AspNetCore.SignalR;
 
@@ -13,7 +14,7 @@ public class ChatHub : Hub
     }
     public async Task SendMessage(string userId, string username, string text)
     {
-        var message = new MessageModel(userId, text);
+        var message = new MessageEntity(userId, text);
         await _messageRepository.InsertMessage(message);
         await _messageRepository.Save();
         await Clients.All.SendAsync("ReceiveMessage", username, text);

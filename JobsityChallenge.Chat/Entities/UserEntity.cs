@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace JobsityChallenge.Chat.Models
+namespace JobsityChallenge.Chat.Entities
 {
-    public class UserModel : IdentityUser
+    public class UserEntity : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<MessageModel> Messages { get; set; }
+        public List<MessageEntity> Messages { get; set; }
     }
 }

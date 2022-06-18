@@ -12,29 +12,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using JobsityChallenge.Chat.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using JobsityChallenge.Chat.Entities;
 
 namespace JobsityChallenge.Chat.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<UserModel> _signInManager;
-        private readonly UserManager<UserModel> _userManager;
-        private readonly IUserStore<UserModel> _userStore;
-        private readonly IUserEmailStore<UserModel> _emailStore;
+        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly UserManager<UserEntity> _userManager;
+        private readonly IUserStore<UserEntity> _userStore;
+        private readonly IUserEmailStore<UserEntity> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<UserModel> userManager,
-            IUserStore<UserModel> userStore,
-            SignInManager<UserModel> signInManager,
+            UserManager<UserEntity> userManager,
+            IUserStore<UserEntity> userStore,
+            SignInManager<UserEntity> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -164,11 +164,11 @@ namespace JobsityChallenge.Chat.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private UserModel CreateUser()
+        private UserEntity CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<UserModel>();
+                return Activator.CreateInstance<UserEntity>();
             }
             catch
             {
@@ -178,13 +178,13 @@ namespace JobsityChallenge.Chat.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<UserModel> GetEmailStore()
+        private IUserEmailStore<UserEntity> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<UserModel>)_userStore;
+            return (IUserEmailStore<UserEntity>)_userStore;
         }
     }
 }

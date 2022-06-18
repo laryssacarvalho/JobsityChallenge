@@ -1,47 +1,46 @@
-﻿using JobsityChallenge.Chat.Models;
+﻿using JobsityChallenge.Chat.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobsityChallenge.Chat.Repositories
+namespace JobsityChallenge.Chat.Repositories;
+
+public class MessageRepository : IMessageRepository
 {
-    public class MessageRepository : IMessageRepository
+    private DbContext _context;
+    private DbSet<MessageEntity> _dbSet;
+
+    public MessageRepository(DbContext context)
     {
-        private DbContext _context;
-        private DbSet<MessageModel> _dbSet;
+        _context = context;
+        _dbSet = _context.Set<MessageEntity>();
+    }
 
-        public MessageRepository(DbContext context)
+    public async Task<IEnumerable<MessageEntity>> GetMessages() => await _dbSet.ToListAsync();
+
+    public async Task InsertMessage(MessageEntity message) => await _dbSet.AddAsync(message);                
+
+    public async Task Save()
+    {
+        await _context.SaveChangesAsync();
+    }
+
+    private bool disposed = false;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!this.disposed)
         {
-            _context = context;
-            _dbSet = _context.Set<MessageModel>();
-        }
-
-        public async Task<IEnumerable<MessageModel>> GetMessages() => await _dbSet.ToListAsync();
-
-        public async Task InsertMessage(MessageModel message) => await _dbSet.AddAsync(message);                
-
-        public async Task Save()
-        {
-            await _context.SaveChangesAsync();
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
+                _context.Dispose();
             }
-            this.disposed = true;
         }
+        this.disposed = true;
+    }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }
-}
+

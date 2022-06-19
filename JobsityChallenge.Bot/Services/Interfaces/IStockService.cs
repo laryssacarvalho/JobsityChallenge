@@ -1,7 +1,6 @@
-﻿namespace JobsityChallenge.Bot.Services.Interfaces
+﻿namespace JobsityChallenge.Bot.Services.Interfaces;
+
+public interface IStockService
 {
-    public interface IStockService
-    {
-        public Task<float> GetStockQuoteByCode(string stockCode);
-    }
+    public Task<float> GetStockQuoteByCode(string stockCode);
 }

@@ -1,9 +1,8 @@
 ﻿using JobsityChallenge.Bot.Models;
 
-namespace JobsityChallenge.Bot.Services.Interfaces
+namespace JobsityChallenge.Bot.Services.Interfaces;
+
+public interface ICommandService
 {
-    public interface ICommandService
-    {
-        public Task ExecuteCommand(CommandModel command);
-    }
+    public Task ExecuteCommand(CommandModel command);
 }

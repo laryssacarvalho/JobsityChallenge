@@ -3,25 +3,29 @@ using JobsityChallenge.Chat.Data;
 using JobsityChallenge.Chat.Entities;
 using JobsityChallenge.Chat.Hubs;
 using JobsityChallenge.Chat.Repositories;
+using JobsityChallenge.Chat.Services;
+using JobsityChallenge.Chat.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+//Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSignalR();
 
+builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("ApplicationSettings"));
+
+
+//Identity
+builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
@@ -32,16 +36,21 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = true;
 });
 
+//Repositories
 builder.Services.AddScoped<IRepository<MessageEntity, int>, Repository<MessageEntity, int>>();
 builder.Services.AddScoped<IRepository<UserEntity, string>, Repository<UserEntity, string>>();
 
+//Services
+builder.Services.AddScoped<IBotApiService, BotApiService>();
+builder.Services.AddHttpClient<BotApiService>();
+
+//Hosted Services
+builder.Services.AddHostedService<StockQueueConsumerService>();
+
 builder.Services.AddScoped<DbContext, ApplicationDbContext>();
-builder.Services.AddHttpClient<ChatHub>();
-//builder.Services.AddHostedService<StockQueueConsumerService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -49,7 +58,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Chatroom/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

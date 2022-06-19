@@ -26,9 +26,9 @@ public class ChatroomController : Controller
     public async Task<IActionResult> Index()
     {
         var currentUser = await _userManager.GetUserAsync(User);
-        
+
         ViewBag.UserId = currentUser.Id;
-        var messages = await _messageRepository.GetAllAsync(x => x.Include(m => m.User), x => x.OrderByDescending(m => m.Date), 50);        
+        var messages = await _messageRepository.GetAllAsync(x => x.Include(m => m.User), x => x.OrderByDescending(m => m.Date), 50);
 
         ViewBag.Messages = messages.OrderBy(m => m.Date).Select(m =>
         {

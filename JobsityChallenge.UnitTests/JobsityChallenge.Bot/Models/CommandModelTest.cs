@@ -1,5 +1,5 @@
-﻿using JobsityChallenge.Bot.Models;
-using JobsityChallenge.Bot;
+﻿using JobsityChallenge.Bot;
+using JobsityChallenge.Bot.Models;
 
 namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Models;
 

@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using JobsityChallenge.Bot.Models;
 using JobsityChallenge.Bot.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JobsityChallenge.Bot.Controllers;
 

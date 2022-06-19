@@ -1,7 +1,6 @@
-﻿namespace JobsityChallenge.Bot.Messages
+﻿namespace JobsityChallenge.Bot.Messages;
+
+public interface IMessagePublisher
 {
-    public interface IMessagePublisher
-    {
-        public void PublishMessageOnQueue(string queueName, object message);
-    }
+    public void PublishMessageOnQueue(string queueName, object message);
 }

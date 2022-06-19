@@ -67,11 +67,11 @@ public class CommandControllerTest
     {
         //Arrange
         var commandRequest = new CommandModel { Command = Constants.ValidCommands.First() };
-        
+
         _mocker.GetMock<ICommandService>()
             .Setup(x => x.ExecuteCommand(It.IsAny<CommandModel>()))
             .Throws(new Exception("Error"));
-        
+
         //Act
         var result = await _sut.Execute(commandRequest) as ObjectResult;
 

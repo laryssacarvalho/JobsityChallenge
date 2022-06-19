@@ -1,6 +1,8 @@
 ﻿using CsvHelper;
 using JobsityChallenge.Bot.Models;
 using JobsityChallenge.Bot.Services.Interfaces;
+using JobsityChallenge.Bot.Settings;
+using Microsoft.Extensions.Options;
 using System.Globalization;
 
 namespace JobsityChallenge.Bot.Services;
@@ -8,15 +10,18 @@ namespace JobsityChallenge.Bot.Services;
 public class StockService : IStockService
 {
     private readonly HttpClient _client;
-    private readonly string _endpoint = "https://stooq.com/q/l/?s={0}&f=sd2t2ohlcv&h&e=csv";
-    public StockService(HttpClient client)
+    private readonly string _baseApiEndpoint;
+    private readonly string _csvStockQuotePath = "/?s={0}&f=sd2t2ohlcv&h&e=csv";
+
+    public StockService(HttpClient client, IOptions<ApplicationSettings> settings)
     {
         _client = client;
+        _baseApiEndpoint = settings.Value.StockApiEndpoint;
     }
 
     public async Task<float> GetStockQuoteByCode(string stockCode)
     {
-        var response = await _client.GetStreamAsync(string.Format(_endpoint, stockCode));
+        var response = await _client.GetStreamAsync($"{_baseApiEndpoint}{string.Format(_csvStockQuotePath, stockCode)}");
         return GetStockQuoteFromCsv(response);
     }
 

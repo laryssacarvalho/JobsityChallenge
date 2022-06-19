@@ -10,13 +10,13 @@ using System.Diagnostics;
 namespace JobsityChallenge.Chat.Controllers;
 
 [Authorize]
-public class HomeController : Controller
+public class ChatroomController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<ChatroomController> _logger;
     private readonly UserManager<UserEntity> _userManager;
     private readonly IRepository<MessageEntity, int> _messageRepository;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<UserEntity> userManager, IRepository<MessageEntity, int> messageRepository)
+    public ChatroomController(ILogger<ChatroomController> logger, UserManager<UserEntity> userManager, IRepository<MessageEntity, int> messageRepository)
     {
         _logger = logger;
         _userManager = userManager;
@@ -36,8 +36,6 @@ public class HomeController : Controller
 
             return new { Name = name, Text = m.Text, Date = m.Date.ToString("g") };
         });
-
-        //ViewBag.Messages = messages.OrderBy(m => m.Date).Select(m => new { Name = $"{m.User.FirstName} {m.User.LastName}", Text = m.Text });
 
         return View();
     }

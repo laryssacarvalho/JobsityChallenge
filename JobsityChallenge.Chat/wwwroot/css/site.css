@@ -16,3 +16,25 @@ html {
 body {
     margin-bottom: 60px;
 }
+
+.msg-container {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.msg-container > p {
+    margin-bottom: 0 !important;
+}
+
+.msg-container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.time-right {
+    float: right;
+    color: #aaa;
+    font-size: 12px;
+}

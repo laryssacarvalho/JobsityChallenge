@@ -30,7 +30,14 @@ public class HomeController : Controller
         ViewBag.UserId = currentUser.Id;
         var messages = await _messageRepository.GetAllAsync(x => x.Include(m => m.User), x => x.OrderByDescending(m => m.Date), 50);        
 
-        ViewBag.Messages = messages.OrderBy(m => m.Date);
+        ViewBag.Messages = messages.OrderBy(m => m.Date).Select(m =>
+        {
+            var name = m.UserId is null ? "BOT" : $"{m.User.FirstName} {m.User.LastName}";
+
+            return new { Name = name, Text = m.Text, Date = m.Date.ToString("g") };
+        });
+
+        //ViewBag.Messages = messages.OrderBy(m => m.Date).Select(m => new { Name = $"{m.User.FirstName} {m.User.LastName}", Text = m.Text });
 
         return View();
     }

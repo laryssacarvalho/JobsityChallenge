@@ -4,10 +4,14 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
 
 $("#sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (user, message) {
-    var li = $("<li></li>").text(user + ": " + message);
-    li.addClass("list-group-item");
-    $("#messagesList").append(li);
+connection.on("ReceiveMessage", function (user, message) {    
+    var currentDateTimeString = new Date().toLocaleString();
+    var currentDateTimeStringFormatted = currentDateTimeString.replace(",", "");
+    var div = $("<div></div>");
+    
+    div.html(`<b>${user}:</b><p>${message}</p><span class="time-right">${currentDateTimeStringFormatted}</span>`);
+    div.addClass("msg-container");
+    $("#messagesList").append(div);
 });
 
 connection.start().then(function () {

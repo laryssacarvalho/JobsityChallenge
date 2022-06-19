@@ -1,7 +1,7 @@
 using RabbitMQ.Client;
-using StockBot.Messages;
-using StockBot.Services;
-using StockBot.Services.Interfaces;
+using JobsityChallenge.Bot.Messages;
+using JobsityChallenge.Bot.Services;
+using JobsityChallenge.Bot.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

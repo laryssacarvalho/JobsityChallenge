@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Moq.AutoMock;
-using StockBot.Controllers;
-using StockBot.Models;
-using System.Net;
-using StockBot;
-using StockBot.Services.Interfaces;
+﻿using JobsityChallenge.Bot;
+using JobsityChallenge.Bot.Controllers;
+using JobsityChallenge.Bot.Models;
+using JobsityChallenge.Bot.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Moq.AutoMock;
+using System.Net;
 
-namespace JobsityChallenge.UnitTests.StockBot.Controllers;
+namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Controllers;
 
 public class CommandControllerTest
 {

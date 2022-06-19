@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChallenge.UnitTests", "JobsityChallenge.UnitTests\JobsityChallenge.UnitTests.csproj", "{F4237E05-70C7-426B-8EB0-F42440482C1D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3098B427-818E-4E66-A240-0A103028DD2D} = {3098B427-818E-4E66-A240-0A103028DD2D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChallenge.Chat", "JobsityChallenge.Chat\JobsityChallenge.Chat.csproj", "{51849C2E-D19A-49B3-8C42-1C1FAEAF1A6F}"
 EndProject

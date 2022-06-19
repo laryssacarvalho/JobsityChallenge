@@ -1,16 +1,11 @@
-﻿using Moq;
+﻿using JobsityChallenge.Bot.Messages;
+using JobsityChallenge.Bot.Models;
+using JobsityChallenge.Bot.Services;
+using JobsityChallenge.Bot.Services.Interfaces;
+using Moq;
 using Moq.AutoMock;
-using StockBot.Messages;
-using StockBot.Models;
-using StockBot.Services;
-using StockBot.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace JobsityChallenge.UnitTests.StockBot.Services
+namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services
 {
     public class CommandServiceTest
     {

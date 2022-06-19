@@ -1,6 +1,7 @@
 ﻿using JobsityChallenge.Chat.Entities;
 using JobsityChallenge.Chat.Models;
 using JobsityChallenge.Chat.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 
 namespace JobsityChallenge.Chat.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

@@ -37,12 +37,16 @@ builder.Services.AddScoped<IRepository<UserEntity, string>, Repository<UserEntit
 
 builder.Services.AddScoped<DbContext, ApplicationDbContext>();
 builder.Services.AddHttpClient<ChatHub>();
-builder.Services.AddHostedService<StockQueueConsumerService>();
+//builder.Services.AddHostedService<StockQueueConsumerService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseMigrationsEndPoint();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -60,6 +64,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.MapHub<ChatHub>("/chat");
 

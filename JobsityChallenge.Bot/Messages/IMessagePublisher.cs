@@ -1,4 +1,4 @@
-﻿namespace StockBot.Messages
+﻿namespace JobsityChallenge.Bot.Messages
 {
     public interface IMessagePublisher
     {

@@ -1,4 +1,4 @@
-﻿namespace StockBot.Services.Interfaces
+﻿namespace JobsityChallenge.Bot.Services.Interfaces
 {
     public interface IStockService
     {

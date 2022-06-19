@@ -1,6 +1,6 @@
-﻿using StockBot.Models;
+﻿using JobsityChallenge.Bot.Models;
 
-namespace StockBot.Services.Interfaces
+namespace JobsityChallenge.Bot.Services.Interfaces
 {
     public interface ICommandService
     {

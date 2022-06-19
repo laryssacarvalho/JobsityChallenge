@@ -1,11 +1,7 @@
-﻿using CsvHelper;
-using Moq;
+﻿using JobsityChallenge.Bot.Services;
 using Moq.AutoMock;
-using StockBot.Models;
-using StockBot.Services;
-using System.Globalization;
 
-namespace JobsityChallenge.UnitTests.StockBot.Services;
+namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services;
 
 public class StockServiceTest
 {

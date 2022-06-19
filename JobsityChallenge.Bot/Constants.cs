@@ -1,4 +1,4 @@
-﻿namespace StockBot;
+﻿namespace JobsityChallenge.Bot;
 
 public static class Constants
 {

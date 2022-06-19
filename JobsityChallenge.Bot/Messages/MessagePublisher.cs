@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using System.Text;
 
-namespace StockBot.Messages
+namespace JobsityChallenge.Bot.Messages
 {
     public class MessagePublisher : IMessagePublisher
     {

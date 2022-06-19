@@ -1,9 +1,9 @@
 ﻿using CsvHelper;
-using StockBot.Models;
-using StockBot.Services.Interfaces;
+using JobsityChallenge.Bot.Models;
+using JobsityChallenge.Bot.Services.Interfaces;
 using System.Globalization;
 
-namespace StockBot.Services
+namespace JobsityChallenge.Bot.Services
 {
     public class StockService : IStockService
     {

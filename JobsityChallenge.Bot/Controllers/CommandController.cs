@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using StockBot.Models;
-using StockBot.Services.Interfaces;
+using JobsityChallenge.Bot.Models;
+using JobsityChallenge.Bot.Services.Interfaces;
 
-namespace StockBot.Controllers;
+namespace JobsityChallenge.Bot.Controllers;
 
 [ApiController]
 [Route("[controller]")]

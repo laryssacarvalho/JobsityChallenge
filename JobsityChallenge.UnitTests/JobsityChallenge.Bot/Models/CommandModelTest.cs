@@ -1,7 +1,7 @@
-﻿using StockBot.Models;
-using StockBot;
+﻿using JobsityChallenge.Bot.Models;
+using JobsityChallenge.Bot;
 
-namespace JobsityChallenge.UnitTests.StockBot.Models;
+namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Models;
 
 public class CommandModelTest
 {

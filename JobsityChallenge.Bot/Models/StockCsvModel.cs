@@ -1,4 +1,4 @@
-﻿namespace StockBot.Models
+﻿namespace JobsityChallenge.Bot.Models
 {
     public class StockCsvModel
     {

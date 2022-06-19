@@ -1,8 +1,8 @@
-﻿using StockBot.Messages;
-using StockBot.Models;
-using StockBot.Services.Interfaces;
+﻿using JobsityChallenge.Bot.Messages;
+using JobsityChallenge.Bot.Models;
+using JobsityChallenge.Bot.Services.Interfaces;
 
-namespace StockBot.Services
+namespace JobsityChallenge.Bot.Services
 {
     public class CommandService : ICommandService
     {

@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockBot\StockBot.csproj" />
+    <ProjectReference Include="..\StockBot\JobsityChallenge.Bot.csproj" />
   </ItemGroup>
 
 </Project>

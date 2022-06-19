@@ -16,11 +16,10 @@ connection.start().then(function () {
     return console.error(err.toString());
 });
 
-$("#sendButton").on("click", function (event) {
-    var userName = $("#userName").val();
+$("#sendButton").on("click", function (event) {    
     var userId = $("#userId").val();
     var message = $("#messageInput").val();
-    connection.invoke("SendMessage", userId, userName, message).catch(function (err) {
+    connection.invoke("SendMessage", message, userId).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

@@ -1,3 +1,4 @@
+using JobsityChallenge.Chat;
 using JobsityChallenge.Chat.Data;
 using JobsityChallenge.Chat.Entities;
 using JobsityChallenge.Chat.Hubs;
@@ -31,12 +32,14 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = true;
 });
 
-builder.Services.AddScoped<IMessageRepository, MessageRepository>();
-builder.Services.AddScoped<DbContext, ApplicationDbContext>();
+builder.Services.AddScoped<IRepository<MessageEntity, int>, Repository<MessageEntity, int>>();
+builder.Services.AddScoped<IRepository<UserEntity, string>, Repository<UserEntity, string>>();
 
+builder.Services.AddScoped<DbContext, ApplicationDbContext>();
+builder.Services.AddHttpClient<ChatHub>();
+builder.Services.AddHostedService<StockQueueConsumerService>();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

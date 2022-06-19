@@ -14,7 +14,7 @@ public class MessageRepository : IMessageRepository
         _dbSet = _context.Set<MessageEntity>();
     }
 
-    public async Task<IEnumerable<MessageEntity>> GetMessages() => await _dbSet.ToListAsync();
+    public async Task<IEnumerable<MessageEntity>> GetMessages() => await _dbSet.Include(m => m.User).ToListAsync();
 
     public async Task InsertMessage(MessageEntity message) => await _dbSet.AddAsync(message);                
 

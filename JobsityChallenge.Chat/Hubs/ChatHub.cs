@@ -17,7 +17,20 @@ public class ChatHub : Hub
         _userRepository = userRepository;
         _botService = botService;
     }
-    public async Task SendMessage(string text, string userId = null)
+    public async Task SendMessage(string text, string? userId = null)
+    {
+        var fullName = await GetUserFullName(userId);
+
+        if (IsBotCommand(text))
+            await HandleBotCommand(text);
+        else
+        {
+            await SaveMessage(userId, text);
+
+            await Clients.All.SendAsync("ReceiveMessage", $"{fullName}", text);
+        }
+    }    
+    private async Task<string> GetUserFullName(string? userId)
     {
         var fullName = "BOT";
 
@@ -26,20 +39,7 @@ public class ChatHub : Hub
             var user = await _userRepository.GetByIdAsync(userId);
             fullName = $"{user.FirstName} {user.LastName}";
         }
-
-        await SaveMessage(userId, text);
-
-        await Clients.All.SendAsync("ReceiveMessage", $"{fullName}", text);
-
-        if (IsBotCommand(text))
-            await HandleBotCommand(text);
-    }
-    private async Task SaveMessage(string userId, string text)
-    {
-        var message = new MessageEntity(userId, text);
-
-        await _messageRepository.AddAsync(message);
-        await _messageRepository.Save();
+        return fullName;
     }
     private bool IsBotCommand(string text) => text.StartsWith("/");
 
@@ -55,5 +55,12 @@ public class ChatHub : Hub
         {
             await Clients.All.SendAsync("ReceiveMessage", $"BOT", "Sorry, something went wrong!");
         }
+    }
+    private async Task SaveMessage(string? userId, string text)
+    {
+        var message = new MessageEntity(userId, text);
+
+        await _messageRepository.AddAsync(message);
+        await _messageRepository.Save();
     }
 }

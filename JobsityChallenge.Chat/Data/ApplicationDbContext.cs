@@ -29,8 +29,12 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity>
             .HasKey(e => e.Id);
 
         modelBuilder.Entity<MessageEntity>()
-            .HasOne(e => e.User)
-            .WithMany(m => m.Messages)
+            .Property(e => e.UserId)            
+            .IsRequired(false);
+
+        modelBuilder.Entity<MessageEntity>()            
+            .HasOne(e => e.User)            
+            .WithMany(m => m.Messages)            
             .HasForeignKey(e => e.UserId);
 
         modelBuilder.Entity<MessageEntity>()

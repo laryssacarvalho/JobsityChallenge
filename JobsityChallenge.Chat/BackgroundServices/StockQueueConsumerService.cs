@@ -1,4 +1,6 @@
-﻿using JobsityChallenge.Chat.Settings;
+﻿using JobsityChallenge.Chat.Hubs;
+using JobsityChallenge.Chat.Settings;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
@@ -16,12 +18,10 @@ public class StockQueueConsumerService : BackgroundService
     public StockQueueConsumerService(IOptions<ApplicationSettings> settings)
     {
         _queueName = settings.Value.StockQueueName;
-        _rabbitHost = settings.Value.RabbitMqHost;
+        _rabbitHost = settings.Value.RabbitMqHost;        
     }
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        stoppingToken.ThrowIfCancellationRequested();
-
         var factory = new ConnectionFactory() { HostName = _rabbitHost };
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
@@ -34,12 +34,16 @@ public class StockQueueConsumerService : BackgroundService
                 var message = Encoding.UTF8.GetString(body);
                 var connection = new HubConnectionBuilder().WithUrl($"{_applicationHostName}/chat").Build();
                 await connection.StartAsync();
-                await connection.InvokeAsync("SendMessage", message);
+                await connection.InvokeAsync("SendMessage", message, null);
+                
             };
 
             channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
-        }
 
-        return Task.CompletedTask;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(1000, stoppingToken);
+            }
+        }
     }
 }

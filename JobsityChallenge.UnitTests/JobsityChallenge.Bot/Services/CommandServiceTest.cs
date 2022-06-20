@@ -2,6 +2,8 @@
 using JobsityChallenge.Bot.Models;
 using JobsityChallenge.Bot.Services;
 using JobsityChallenge.Bot.Services.Interfaces;
+using JobsityChallenge.Bot.Settings;
+using Microsoft.Extensions.Options;
 using Moq;
 using Moq.AutoMock;
 
@@ -15,6 +17,12 @@ namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services
         public CommandServiceTest()
         {
             _mocker = new();
+            _mocker.GetMock<IOptions<ApplicationSettings>>()
+                .Setup(x => x.Value).Returns(new ApplicationSettings
+                {
+                    StockQueueName = "stock-queue",
+                    RabbitMqHost = "localhost"
+                });
             _sut = _mocker.CreateInstance<CommandService>();
         }
 
@@ -36,7 +44,7 @@ namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services
             _mocker.GetMock<IStockService>()
                 .Verify(x => x.GetStockQuoteByCode(It.Is<string>(x => x == command.Value)), Times.Once);
             _mocker.GetMock<IMessagePublisher>()
-                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.Is<string>(x => x == expectedMessage)), Times.Once);
+                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<string>(), It.Is<string>(x => x == expectedMessage)), Times.Once);
         }
 
         [Fact]
@@ -57,7 +65,7 @@ namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services
             _mocker.GetMock<IStockService>()
                 .Verify(x => x.GetStockQuoteByCode(It.Is<string>(x => x == command.Value)), Times.Once);
             _mocker.GetMock<IMessagePublisher>()
-                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.Is<string>(x => x == expectedMessage)), Times.Once);
+                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<string>(), It.Is<string>(x => x == expectedMessage)), Times.Once);
         }
 
         [Fact]
@@ -75,7 +83,7 @@ namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services
             _mocker.GetMock<IStockService>()
                 .Verify(x => x.GetStockQuoteByCode(It.IsAny<string>()), Times.Never);
             _mocker.GetMock<IMessagePublisher>()
-                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<object>()), Times.Never);
+                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Never);
         }
     }
 }

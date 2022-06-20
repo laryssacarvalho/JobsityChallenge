@@ -19,17 +19,32 @@ public class ChatHub : Hub
     }
     public async Task SendMessage(string text, string? userId = null)
     {
-        var fullName = await GetUserFullName(userId);
-
         if (IsBotCommand(text))
             await HandleBotCommand(text);
         else
-        {
-            await SaveMessage(userId, text);
-
-            await Clients.All.SendAsync("ReceiveMessage", $"{fullName}", text);
-        }
+            await HandleUserMessage(text, userId);
     }    
+    private bool IsBotCommand(string text) => text.StartsWith("/");
+
+    private async Task HandleBotCommand(string text)
+    {
+        try
+        {
+            await _botService.ExecuteCommand(text);
+        }
+        catch(Exception ex)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", "BOT", $"Sorry, unable to process your command. {ex.Message}");
+        }
+    }
+    private async Task HandleUserMessage(string text, string userId)
+    {
+        var fullName = await GetUserFullName(userId);
+
+        await SaveMessage(userId, text);
+
+        await Clients.All.SendAsync("ReceiveMessage", $"{fullName}", text);
+    }
     private async Task<string> GetUserFullName(string? userId)
     {
         var fullName = "BOT";
@@ -41,26 +56,9 @@ public class ChatHub : Hub
         }
         return fullName;
     }
-    private bool IsBotCommand(string text) => text.StartsWith("/");
-
-    private async Task HandleBotCommand(string text)
-    {
-        try
-        {
-            string command = text.Split('=').FirstOrDefault();
-            string value = text.Split('=').LastOrDefault();
-            await _botService.SendCommandRequest(command, value);
-        }
-        catch
-        {
-            await Clients.All.SendAsync("ReceiveMessage", $"BOT", "Sorry, something went wrong!");
-        }
-    }
     private async Task SaveMessage(string? userId, string text)
     {
-        var message = new MessageEntity(userId, text);
-
-        await _messageRepository.AddAsync(message);
+        await _messageRepository.AddAsync(new MessageEntity(userId, text));
         await _messageRepository.Save();
     }
 }

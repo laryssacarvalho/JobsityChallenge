@@ -2,5 +2,5 @@
 
 public interface IBotApiService
 {
-    public Task SendCommandRequest(string command, string value = null);
+    public Task ExecuteCommand(string commandMessage);
 }

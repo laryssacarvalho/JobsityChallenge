@@ -1,4 +1,5 @@
-﻿using JobsityChallenge.Chat.Models;
+﻿using JobsityChallenge.Chat.Exceptions;
+using JobsityChallenge.Chat.Models;
 using JobsityChallenge.Chat.Settings;
 using Microsoft.Extensions.Options;
 using System.Net;
@@ -16,12 +17,18 @@ public class BotApiService : IBotApiService
         _endpoint = settings.Value.BotApiEndpoint;
     }
 
-    public async Task SendCommandRequest(string command, string value = null)
+    public async Task ExecuteCommand(string commandMessage)
     {
+        string command = commandMessage.Split('=').FirstOrDefault();
+        string value = commandMessage.Split('=').LastOrDefault();
+
         var request = new CommandRequestModel(command, value);
         var response = await _client.PostAsJsonAsync(_endpoint, request);
 
+        if (response.StatusCode == HttpStatusCode.BadRequest)
+            throw new BotException("Please enter a valid command");
+        
         if (response.StatusCode != HttpStatusCode.Accepted)
-            throw new Exception("Error");
+            throw new BotException("Something went wrong!");
     }
 }

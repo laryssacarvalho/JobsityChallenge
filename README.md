@@ -1,7 +1,7 @@
 # JobsityChallenge - Chatroom with stock bot
 
 ## Description
-This .NET application consists of two projects: a chatroom and a bot. The chatroom is a MVC web application and the bot is a web API. The first one is a simple chatroom where a user can send messages to other users, besides commands to a bot. For now, the only command that the bot can handle is "/stock={STOCK_CODE}".
+This .NET application consists of two projects: a chatroom and a bot. The chatroom is a MVC web application using SignalR and the bot is a web API. The first one is a simple chatroom where a user can send messages to other users, besides commands to a bot. For now, the only command that the bot can handle is "/stock={STOCK_CODE}".
 
 The bot API receives the command and executes it. The stock quote command makes a request to an [external API](https://stooq.pl/) and gets a CSV containing the stock information. The stock quote is parsed from the CSV and published on a RabbitMQ queue. The chatroom project has a background service responsible for consuming this queue and send the bot response message on the chatroom.
 

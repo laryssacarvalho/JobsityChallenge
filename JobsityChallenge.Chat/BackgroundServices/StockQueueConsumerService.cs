@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
-namespace JobsityChallenge.Chat;
+namespace JobsityChallenge.Chat.BackgroundServices;
 
 public class StockQueueConsumerService : BackgroundService
 {
@@ -36,12 +36,8 @@ public class StockQueueConsumerService : BackgroundService
                 await connection.StartAsync();
                 await connection.InvokeAsync("SendMessage", message);
             };
-            channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
 
-            //while (true)
-            //{
-            //    channel.BasicConsume(queue: "stock-queue", autoAck: true, consumer: consumer);
-            //}
+            channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
         }
 
         return Task.CompletedTask;

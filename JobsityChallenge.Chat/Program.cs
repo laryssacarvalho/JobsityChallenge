@@ -1,4 +1,4 @@
-using JobsityChallenge.Chat;
+using JobsityChallenge.Chat.BackgroundServices;
 using JobsityChallenge.Chat.Data;
 using JobsityChallenge.Chat.Entities;
 using JobsityChallenge.Chat.Hubs;

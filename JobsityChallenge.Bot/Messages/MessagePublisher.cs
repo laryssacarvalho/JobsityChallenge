@@ -12,17 +12,17 @@ public class MessagePublisher : IMessagePublisher
         _connectionFactory = connectionFactory;
     }
 
-    public void PublishMessageOnQueue(string queueName, object message)
+    public void PublishMessageOnQueue(string queueName, string host, object message)
     {
-        using (var connection = _connectionFactory.CreateConnection())
+
+        var factory = new ConnectionFactory() { HostName = host };
+        using (var connection = factory.CreateConnection())
+        using (var channel = connection.CreateModel())        
         {
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false);
-                var stringfiedMessage = JsonConvert.SerializeObject(message);
-                var bytesMessage = Encoding.UTF8.GetBytes(stringfiedMessage);
-                channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: bytesMessage);
-            }
-        }
+            channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false);
+            var stringfiedMessage = JsonConvert.SerializeObject(message);
+            var bytesMessage = Encoding.UTF8.GetBytes(stringfiedMessage);
+            channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: bytesMessage);
+        }        
     }
 }

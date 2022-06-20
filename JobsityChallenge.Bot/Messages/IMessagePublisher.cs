@@ -2,5 +2,5 @@
 
 public interface IMessagePublisher
 {
-    public void PublishMessageOnQueue(string queueName, object message);
+    public void PublishMessageOnQueue(string queueName, string host, object message);
 }

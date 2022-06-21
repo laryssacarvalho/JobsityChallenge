@@ -16,7 +16,7 @@ Besides that, you can also config the queue name and the stock API endpoint.
 
 ***The StockQueueName on both appsettings.json files should be the same for the application to work properly.***
 
-The projects are configured to run on ports 7224 (chatroom) and 7154 (bot API) but you can change this on the *launchsettings.json* files, if you do so, don't forget to change the *BotApiEndpoint* on the chat project *appsettings.json* to point to the new port.
+The projects are configured to run on ports 7224 (chatroom) and 7154 (bot API) but you can change this on the *launchsettings.json* files, if you do so, don't forget to change the *BotApiEndpoint* and *ApplicationUrl* on the chat project *appsettings.json* to point to the new port.
 
 You also need to set up your solution to execute both projects, check out this [link](https://docs.microsoft.com/en-us/visualstudio/ide/how-to-set-multiple-startup-projects?view=vs-2022) for more details on how to do it.
 

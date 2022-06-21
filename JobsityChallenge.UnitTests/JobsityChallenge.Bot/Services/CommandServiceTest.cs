@@ -44,7 +44,7 @@ namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services
             _mocker.GetMock<IStockService>()
                 .Verify(x => x.GetStockQuoteByCode(It.Is<string>(x => x == command.Value)), Times.Once);
             _mocker.GetMock<IMessagePublisher>()
-                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<string>(), It.Is<string>(x => x == expectedMessage)), Times.Once);
+                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<string>(), It.Is<StockQuoteResponseMessage>(x => x.Text == expectedMessage)), Times.Once);
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace JobsityChallenge.UnitTests.JobsityChallenge.Bot.Services
             _mocker.GetMock<IStockService>()
                 .Verify(x => x.GetStockQuoteByCode(It.Is<string>(x => x == command.Value)), Times.Once);
             _mocker.GetMock<IMessagePublisher>()
-                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<string>(), It.Is<string>(x => x == expectedMessage)), Times.Once);
+                .Verify(x => x.PublishMessageOnQueue(It.IsAny<string>(), It.IsAny<string>(), It.Is<StockQuoteResponseMessage>(x => x.Text == expectedMessage)), Times.Once);
         }
 
         [Fact]

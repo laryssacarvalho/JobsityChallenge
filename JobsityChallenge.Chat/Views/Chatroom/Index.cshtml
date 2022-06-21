@@ -1,17 +1,18 @@
 ﻿@model IEnumerable<JobsityChallenge.Chat.Entities.ChatroomEntity>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Chatrooms";
 }
 
-<h1>Index</h1>
-
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New Chatroom</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>            
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>            
@@ -28,7 +29,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>            
                 <td>
-                    <a asp-action="Room" asp-route-id="@item.Id">Enter</a>             
+                    <a class="btn btn-secondary" asp-action="Room" asp-route-id="@item.Id">Enter</a>             
                 </td>
             </tr>
         }

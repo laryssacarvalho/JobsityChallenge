@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace JobsityChallenge.Chat.Repositories;
 
@@ -16,11 +17,15 @@ public class Repository<TEntity, TID> : IRepository<TEntity, TID> where TEntity 
 
     public async Task<TEntity> GetByIdAsync(TID id) => await DbSet.FindAsync(id);
     public async Task AddAsync(TEntity obj) => await DbSet.AddAsync(obj);
-    public async Task<IEnumerable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                      Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                                      int? take = null)
+    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> expression = null,
+                                                        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                        int? take = null)
     {
         var query = DbSet.AsQueryable();
+
+        if (expression is not null)
+            query = query.Where(expression);
 
         if (include is not null)
             query = include(query);
@@ -33,8 +38,8 @@ public class Repository<TEntity, TID> : IRepository<TEntity, TID> where TEntity 
 
         return await query.ToListAsync();
     }
-
-    public async Task Save()
+    //public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> expression,)
+    public async Task SaveAsync()
     {
         await DbContext.SaveChangesAsync();
     }

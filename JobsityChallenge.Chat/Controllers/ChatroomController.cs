@@ -30,7 +30,7 @@ public class ChatroomController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var chatrooms = await _chatroomRepository.GetAllAsync();
+        var chatrooms = await _chatroomRepository.FindAsync();
         return View(chatrooms);
     }
 
@@ -43,8 +43,7 @@ public class ChatroomController : Controller
 
         var loggedUser = await _userManager.GetUserAsync(User);
 
-        var messages = await _messageRepository.GetAllAsync(x => x.Include(m => m.User), x => x.OrderByDescending(m => m.Date), 50);
-        messages = messages.Where(x => x.ChatroomId == id);
+        var messages = await _messageRepository.FindAsync(x => x.ChatroomId == id, x => x.Include(m => m.User), x => x.OrderByDescending(m => m.Date), 50);        
 
         ViewBag.UserId = loggedUser.Id;
         ViewBag.ChatId = id;
@@ -91,7 +90,7 @@ public class ChatroomController : Controller
         if (ModelState.IsValid)
         {
             await _chatroomRepository.AddAsync(chatroomEntity);
-            await _chatroomRepository.Save();
+            await _chatroomRepository.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -67,6 +67,6 @@ public class ChatHub : Hub
     private async Task SaveMessage(string? userId, string text, int chatId)
     {
         await _messageRepository.AddAsync(new MessageEntity(userId, text, chatId));
-        await _messageRepository.Save();
+        await _messageRepository.SaveAsync();
     }
 }

@@ -55,21 +55,6 @@ public class ChatroomController : Controller
         });
 
         return View();
-
-        //if (id == null || _context.Messages == null)
-        //{
-        //    return NotFound();
-        //}
-
-        //var messageEntity = await _context.Messages
-        //    .Include(m => m.User)
-        //    .FirstOrDefaultAsync(m => m.Id == id);
-        //if (messageEntity == null)
-        //{
-        //    return NotFound();
-        //}
-
-        //return View(messageEntity);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

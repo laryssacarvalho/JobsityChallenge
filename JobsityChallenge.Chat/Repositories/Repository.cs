@@ -38,7 +38,7 @@ public class Repository<TEntity, TID> : IRepository<TEntity, TID> where TEntity 
 
         return await query.ToListAsync();
     }
-    //public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> expression,)
+    
     public async Task SaveAsync()
     {
         await DbContext.SaveChangesAsync();

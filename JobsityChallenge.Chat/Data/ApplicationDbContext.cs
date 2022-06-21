@@ -49,9 +49,5 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity>
 
         modelBuilder.Entity<ChatroomEntity>()
             .HasMany(c => c.Messages);
-        
-        //modelBuilder.Entity<ChatroomEntity>()
-        //    .Property(e => e.Messages)
-        //    .IsRequired(false);
     }
 }

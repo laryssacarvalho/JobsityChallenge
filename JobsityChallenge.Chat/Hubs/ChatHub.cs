@@ -39,8 +39,6 @@ public class ChatHub : Hub
         catch(Exception ex)
         {
             await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", "BOT", $"Sorry, unable to process your command. {ex.Message}");
-
-            //await Clients.All.SendAsync("ReceiveMessage", "BOT", $"Sorry, unable to process your command. {ex.Message}");
         }
     }
     private async Task HandleUserMessage(string text, string userId, int chatId)
@@ -49,7 +47,6 @@ public class ChatHub : Hub
         
         await SaveMessage(userId, text, chatId);
 
-        //await Clients.All.SendAsync("ReceiveMessage", $"{fullName}", text);
         await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", $"{fullName}", text);
 
     }

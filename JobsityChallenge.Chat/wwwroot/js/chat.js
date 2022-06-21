@@ -15,15 +15,23 @@ connection.on("ReceiveMessage", function (user, message) {
 });
 
 connection.start().then(function () {
+    var chatId = parseInt($("#chatId").val());
+
     $("#sendButton").disabled = false;
+    connection.invoke("JoinGroup", chatId)
+        .catch(err => {
+            console.log(err);
+        });
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
 $("#sendButton").on("click", function (event) {    
+    debugger;
     var userId = $("#userId").val();
+    var chatId = parseInt($("#chatId").val());
     var message = $("#messageInput").val();
-    connection.invoke("SendMessage", message, userId).catch(function (err) {
+    connection.invoke("SendMessage", message, chatId, userId).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

@@ -42,6 +42,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 //Repositories
 builder.Services.AddScoped<IRepository<MessageEntity, int>, Repository<MessageEntity, int>>();
 builder.Services.AddScoped<IRepository<UserEntity, string>, Repository<UserEntity, string>>();
+builder.Services.AddScoped<IRepository<ChatroomEntity, int>, Repository<ChatroomEntity, int>>();
 
 //Services
 builder.Services.AddScoped<IBotApiService, BotApiService>();

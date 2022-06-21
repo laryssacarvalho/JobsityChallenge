@@ -8,6 +8,7 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity>
 {
     public DbSet<MessageEntity> Messages { get; set; }
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<ChatroomEntity> Chatrooms { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
@@ -38,7 +39,19 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity>
             .HasForeignKey(e => e.UserId);
 
         modelBuilder.Entity<MessageEntity>()
+            .HasOne(e => e.Chatroom)
+            .WithMany(m => m.Messages)
+            .HasForeignKey(e => e.ChatroomId);
+
+        modelBuilder.Entity<MessageEntity>()
             .Property(e => e.Date)
             .HasDefaultValueSql("getdate()");
+
+        modelBuilder.Entity<ChatroomEntity>()
+            .HasMany(c => c.Messages);
+        
+        //modelBuilder.Entity<ChatroomEntity>()
+        //    .Property(e => e.Messages)
+        //    .IsRequired(false);
     }
 }

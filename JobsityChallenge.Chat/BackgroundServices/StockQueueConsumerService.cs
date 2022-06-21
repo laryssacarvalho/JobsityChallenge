@@ -1,8 +1,11 @@
-﻿using JobsityChallenge.Chat.Hubs;
+﻿using JobsityChallenge.Chat.Events;
+using JobsityChallenge.Chat.Hubs;
 using JobsityChallenge.Chat.Settings;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -31,10 +34,15 @@ public class StockQueueConsumerService : BackgroundService
             consumer.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
+                var messageString = Encoding.UTF8.GetString(body);
+
+                var message = JsonConvert.DeserializeObject<StockQuoteResponseEvent>(messageString);
+                
                 var connection = new HubConnectionBuilder().WithUrl($"{_applicationHostName}/chat").Build();
+                
                 await connection.StartAsync();
-                await connection.InvokeAsync("SendMessage", message, null);
+                await connection.InvokeAsync("JoinGroup", message.ChatId);
+                await connection.InvokeAsync("SendMessage", message.Text, message.ChatId, null);
                 
             };
 

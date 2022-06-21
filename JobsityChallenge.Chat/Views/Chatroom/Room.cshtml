@@ -1,0 +1,34 @@
+﻿@using JobsityChallenge.Chat.Models
+
+@{
+    ViewData["Title"] = "Chatroom";
+}
+
+<div class="container">
+    <input type="hidden" id="userId" value="@ViewBag.UserId" />
+    <input type="hidden" id="chatId" value="@ViewBag.ChatId" />
+    
+    <div class="row">
+        <div class="col-2">Message:</div>
+        <div class="col-8">
+            <input type="text" class="form-control mb-2 mr-sm-2" id="messageInput">
+        </div>
+        <div class="col-2">
+            <input type="button" id="sendButton" class="btn btn-primary mb-2" value="Send"/>            
+        </div>
+    </div>
+    <div class="row" id="messagesList">
+        @foreach(var msg in ViewBag.Messages)
+        {             
+            <div class="msg-container">
+                <b>@msg.Name:</b>
+                <p>@msg.Text</p>
+                <span class="time-right">@msg.Date</span>
+            </div>
+        }
+    </div>
+</div>    
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

@@ -17,12 +17,12 @@ public class BotApiService : IBotApiService
         _endpoint = settings.Value.BotApiEndpoint;
     }
 
-    public async Task ExecuteCommand(string commandMessage)
+    public async Task ExecuteCommand(string commandMessage, int chatId)
     {
         string command = commandMessage.Split('=').FirstOrDefault();
         string value = commandMessage.Split('=').LastOrDefault();
 
-        var request = new CommandRequestModel(command, value);
+        var request = new CommandRequestModel(command, value, chatId);
         var response = await _client.PostAsJsonAsync(_endpoint, request);
 
         if (response.StatusCode == HttpStatusCode.BadRequest)

@@ -17,33 +17,41 @@ public class ChatHub : Hub
         _userRepository = userRepository;
         _botService = botService;
     }
-    public async Task SendMessage(string text, string? userId = null)
+    public Task JoinGroup(int chatId)
+    {
+        return Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
+    }
+    public async Task SendMessage(string text, int chatId, string? userId = null)
     {
         if (IsBotCommand(text))
-            await HandleBotCommand(text);
+            await HandleBotCommand(text, chatId);
         else
-            await HandleUserMessage(text, userId);
+            await HandleUserMessage(text, userId, chatId);
     }    
     private bool IsBotCommand(string text) => text.StartsWith("/");
 
-    private async Task HandleBotCommand(string text)
+    private async Task HandleBotCommand(string text, int chatId)
     {
         try
         {
-            await _botService.ExecuteCommand(text);
+            await _botService.ExecuteCommand(text, chatId);
         }
         catch(Exception ex)
         {
-            await Clients.All.SendAsync("ReceiveMessage", "BOT", $"Sorry, unable to process your command. {ex.Message}");
+            await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", "BOT", $"Sorry, unable to process your command. {ex.Message}");
+
+            //await Clients.All.SendAsync("ReceiveMessage", "BOT", $"Sorry, unable to process your command. {ex.Message}");
         }
     }
-    private async Task HandleUserMessage(string text, string userId)
+    private async Task HandleUserMessage(string text, string userId, int chatId)
     {
         var fullName = await GetUserFullName(userId);
+        
+        await SaveMessage(userId, text, chatId);
 
-        await SaveMessage(userId, text);
+        //await Clients.All.SendAsync("ReceiveMessage", $"{fullName}", text);
+        await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", $"{fullName}", text);
 
-        await Clients.All.SendAsync("ReceiveMessage", $"{fullName}", text);
     }
     private async Task<string> GetUserFullName(string? userId)
     {
@@ -56,9 +64,9 @@ public class ChatHub : Hub
         }
         return fullName;
     }
-    private async Task SaveMessage(string? userId, string text)
+    private async Task SaveMessage(string? userId, string text, int chatId)
     {
-        await _messageRepository.AddAsync(new MessageEntity(userId, text));
+        await _messageRepository.AddAsync(new MessageEntity(userId, text, chatId));
         await _messageRepository.Save();
     }
 }

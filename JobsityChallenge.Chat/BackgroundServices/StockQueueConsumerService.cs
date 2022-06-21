@@ -16,12 +16,13 @@ public class StockQueueConsumerService : BackgroundService
 {
     private readonly string _queueName;
     private readonly string _rabbitHost;
-    private readonly string _applicationHostName = "https://localhost:7224";
+    private readonly string _applicationHostName;
 
     public StockQueueConsumerService(IOptions<ApplicationSettings> settings)
     {
         _queueName = settings.Value.StockQueueName;
-        _rabbitHost = settings.Value.RabbitMqHost;        
+        _rabbitHost = settings.Value.RabbitMqHost;
+        _applicationHostName = settings.Value.ApplicationUrl;
     }
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

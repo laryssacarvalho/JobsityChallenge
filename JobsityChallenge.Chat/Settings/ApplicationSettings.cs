@@ -5,4 +5,5 @@ public class ApplicationSettings
     public string BotApiEndpoint { get; set; }
     public string RabbitMqHost { get; set; }
     public string StockQueueName { get; set; }
+    public string ApplicationUrl { get; set; }
 }
